@@ -13,9 +13,9 @@ public interface CardService {
 
     CardResponse enrollCard(EnrollCardDTO enrollCardDTO);
 
-    getCardResponse getCard(GetCardDTO getCardDTO);
+    getCardResponse getCard(String pan);
 
-    DeleteCardDTO deleteCard(DeleteCardDTO deleteCardDTO);
+    DeleteCardResponse deleteCard(DeleteCardDTO deleteCardDTO);
 
 
 }

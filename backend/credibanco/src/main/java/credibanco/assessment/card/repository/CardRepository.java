@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 
 public interface CardRepository extends CrudRepository<Card, String> {
 
+    Card findCardByPAN(String P);
 }

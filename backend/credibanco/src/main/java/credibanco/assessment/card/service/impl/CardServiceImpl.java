@@ -63,16 +63,67 @@ public class CardServiceImpl  implements CardService {
 
     @Override
     public CardResponse enrollCard(EnrollCardDTO enrollCardDTO) {
-        return null;
+        CardResponse response = new CardResponse();
+
+        try{
+            Card card = cardRepository.findCardByPAN(enrollCardDTO.getPAN());
+            if(card.getValidationNumber() == enrollCardDTO.getValidationNumber() || card.getState().equals(false)){
+                card.setState(true);
+                cardRepository.save(card);
+                response.setCode(Constants.CODE_SUCCESS.getMessage());
+                response.setMessage(Constants.SUCCESS.getMessage());
+                response.setPAN(card.getPAN());
+            }else{
+                response.setMessage(Constants.FAILED.getMessage());
+                response.setCode(Constants.CODE_FAILED.getMessage());
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+            response.setMessage(Constants.FAILED.getMessage());
+            response.setCode(Constants.CODE_FAILED.getMessage());
+        }
+        return  response;
     }
 
     @Override
-    public getCardResponse getCard(GetCardDTO getCardDTO) {
-        return null;
+    public getCardResponse getCard(String pan) {
+        getCardResponse response = new getCardResponse();
+        try{
+            Card card = cardRepository.findCardByPAN(pan);
+            response.setPAN(card.getPAN());
+            response.setOwner(card.getOwner());
+            response.setPhone(card.getPhone());
+            response.setUserId(card.getUserId());
+            response.setState(card.getState() ? "Activa": "Inactiva");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
     }
 
     @Override
-    public DeleteCardDTO deleteCard(DeleteCardDTO deleteCardDTO) {
-        return null;
+    public DeleteCardResponse deleteCard(DeleteCardDTO deleteCardDTO) {
+
+        DeleteCardResponse response = new DeleteCardResponse();
+
+        try{
+            Card card = cardRepository.findCardByPAN(deleteCardDTO.getPAN());
+            if(card.getValidationNumber().equals(deleteCardDTO.getValidationNumber())){
+                cardRepository.delete(card);
+                response.setCode(Constants.CODE_SUCCESS.getMessage());
+                response.setMessage(Constants.CARD_DELETED.getMessage());
+            }else{
+                response.setMessage(Constants.FAIL_DELETE_CARD.getMessage());
+                response.setCode(Constants.CODE_FAILED.getMessage());
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setMessage(Constants.FAIL_DELETE_CARD.getMessage());
+            response.setCode(Constants.CODE_FAILED.getMessage());
+        }
+
+        return response;
     }
 }
