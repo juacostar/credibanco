@@ -6,6 +6,8 @@ import credibanco.assessment.card.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 public interface CardService {
 
@@ -16,6 +18,8 @@ public interface CardService {
     getCardResponse getCard(String pan);
 
     DeleteCardResponse deleteCard(DeleteCardDTO deleteCardDTO);
+
+    List<getCardResponse> getAllCArds();
 
 
 }

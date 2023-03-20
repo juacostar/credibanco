@@ -1,0 +1,12 @@
+<h2>Tarjetas Banco Credibanco</h2>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let card of cards">
+        <div class="container">
+            <h6>{{card.pan}}</h6>
+            <h6>{{card.owner}}</h6>
+            <h6>{{card.phone}}</h6>
+            <h6>{{card.userId}}</h6>
+            <h6>{{card.state}}</h6>
+        </div>
+    </li>
+</ul>

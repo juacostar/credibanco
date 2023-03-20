@@ -1,9 +1,6 @@
 package credibanco.assessment.card.service.impl;
 
-import credibanco.assessment.card.dto.CreateTransactionDTO;
-import credibanco.assessment.card.dto.CreateTransactionResponse;
-import credibanco.assessment.card.dto.DeleteTransactionDTO;
-import credibanco.assessment.card.dto.DeleteTransactionResponse;
+import credibanco.assessment.card.dto.*;
 import credibanco.assessment.card.model.Card;
 import credibanco.assessment.card.model.Transaction;
 import credibanco.assessment.card.repository.CardRepository;
@@ -15,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -82,6 +81,27 @@ public class TransactionServiceImpl implements TransactionService {
         }catch (Exception e){
             response.setCode(Constants.BAD_REFERENCE.getMessage());
             response.setMessage(Constants.BAD_REFERENCE_MESSAGE.getMessage());
+        }
+
+        return response;
+    }
+
+    @Override
+    public List<GetTransactionResponse> findAllTransactions() {
+
+        List<GetTransactionResponse> response = new ArrayList<>(); // Liskov Substitution
+        List<Transaction> transactions = (List<Transaction>) transactionRepository.findAll();
+
+        for(Transaction transaction: transactions){
+            GetTransactionResponse getTransactionResponse = new GetTransactionResponse();
+            getTransactionResponse.setCardPan(transaction.getCard().getPAN());
+            getTransactionResponse.setAmount(transaction.getAmount());
+            getTransactionResponse.setDate(transaction.getDate());
+            getTransactionResponse.setState(transaction.getState());
+            getTransactionResponse.setReference(transaction.getReference());
+            getTransactionResponse.setAddress(transaction.getAddress());
+
+            response.add(getTransactionResponse);
         }
 
         return response;

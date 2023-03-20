@@ -8,6 +8,9 @@ import credibanco.assessment.card.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CardServiceImpl  implements CardService {
 
@@ -122,6 +125,25 @@ public class CardServiceImpl  implements CardService {
             e.printStackTrace();
             response.setMessage(Constants.FAIL_DELETE_CARD.getMessage());
             response.setCode(Constants.CODE_FAILED.getMessage());
+        }
+
+        return response;
+    }
+
+    @Override
+    public List<getCardResponse> getAllCArds() {
+
+        List<getCardResponse> response = new ArrayList<>(); // liskov substitution
+        List<Card> cards = (List<Card>) cardRepository.findAll();
+
+        for(Card card: cards){
+                getCardResponse getCardResponse = new getCardResponse();
+                getCardResponse.setPAN(maskPan(card.getPAN()));
+                getCardResponse.setUserId(card.getUserId());
+                getCardResponse.setOwner(card.getOwner());
+                getCardResponse.setPhone(card.getPhone());
+                getCardResponse.setState(card.getState()? "Activada": "Desactivada");
+                response.add(getCardResponse);
         }
 
         return response;

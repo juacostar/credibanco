@@ -1,0 +1,13 @@
+<h2>Transacciones Banco Credibanco</h2>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let transaction of transactions">
+        <div class="container">
+            <h6>{{transaction.address}}</h6>
+            <h6>{{transaction.amount}}</h6>
+            <h6>{{transaction.date}}</h6>
+            <h6>{{transaction.reference}}</h6>
+            <h6>{{transaction.state}}</h6>
+            <h6>{{transaction.cardPan}}</h6>
+        </div>
+    </li>
+</ul>

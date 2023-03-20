@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.plaf.synth.SynthSpinnerUI;
+import java.util.List;
 
 @Controller
 public class ApiController {
@@ -48,6 +49,16 @@ public class ApiController {
     @RequestMapping(value = "/transaction/deny", method = RequestMethod.PUT)
     public @ResponseBody ResponseEntity<DeleteTransactionResponse> denyTransacton(@RequestBody DeleteTransactionDTO deleteTransactionDTO){
         return ResponseEntity.ok(transactionService.deleteTransaction(deleteTransactionDTO));
+    }
+
+    @RequestMapping(value = "/cards", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<List<getCardResponse>> getAllCards(){
+        return ResponseEntity.ok(cardService.getAllCArds());
+    }
+
+    @RequestMapping(value = "/transactions", method = RequestMethod.GET)
+    public  @ResponseBody ResponseEntity<List<GetTransactionResponse>> findAllTransactions(){
+        return ResponseEntity.ok(transactionService.findAllTransactions());
     }
 
 }
